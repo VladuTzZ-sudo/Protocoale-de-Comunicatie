@@ -1,0 +1,1 @@
+struct route_table_entry *rtable;

@@ -1,0 +1,20 @@
+Matei Vlad Cristian
+321CC
+
+Functia get_best_route(...)
+    >   aceasta cauta in tabela de rutare intrarile care se potrivesc cu 
+    adresa ruterului destinatie.
+    >   dintre intrarile care se potrivesc selecteaza intrarea care are cea mai
+    lunga | mare masca. ( pentru a avea o adresa cat mai apropiata de cea a destinatiei).
+
+Functia arp_entry(...)
+    >   returneaza adresa obiectului-structura care contine adresa ip cautata.
+
+Ruterul primeste un packet prin functia get_packet(...).
+Verifica ca checksum-ul sa fie corect, in caz contrar se arunca pachetul.
+Verifica TTL-ul sa nu fie 0, daca este diferit de 0 , atunci il scade cu o 
+unitate si reseteazaz checksum-ul, altfel se arunca pachetul.
+Apoi, se adapteaza adresele Ethernet-ului.
+In capatul sursei se seteaza mac-ul ruterului de pe calea cea mai buna.
+Iar in capatul destinatiei urmatoare, se seteaza mac-ul urmatorului hop al ruterului de pe
+calea cea mai buna.

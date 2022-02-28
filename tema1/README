@@ -1,0 +1,75 @@
+Matei Vlad Cristian
+321CC
+
+TEMA ROUTER - 2020
+
+1. Parsarea tabelei de rutare.
+    = FUNCTIA read_rtable(...) =
+    :: Aloc pe heap memorie pentru tabela, capacitatea initiala fiind de 10000.
+    :: Cat timp mai sunt linii de citit, preiau linie cu linie folosind fgets().
+    :: Fiecare element este identificat in linia citita si pus in tabela.
+    :: In tabela, masca, prefix-ul si next_hop-ul se afla in format uint32_t, deci
+    folosesc functia inet_addr() pentru conversia din string.
+    :: Se trece la urmatoarea linie, contorizandu-se numarul acestora.
+    :: Functia returneaza numarul de linii din tabela de rutare.
+
+2. Protocolul ARP.
+    :: Atunci cand se primeste un packet se verifica daca tipul este ARP.
+    :: Se foloseste functia parse_arp pentru parsare.
+    :: Daca header-ul arp este diferit de NULL, atunci se verifica tipul.
+    == Cazul ARP_REQUEST == 
+        :: Se trimite un raspuns routerului de la care s-a primit REQUEST.
+        :: Astfel, se modifica packetul setandu-se MAC-ul destinatie si sursa din
+        ether_header. De asemenea, se inverseaza sender IP-ul si target IP-ul din 
+        header-ul ARP.
+    
+    == Cazul ARP_REPLY ==
+        :: Se extrage din tabela ARP intrarea corepunzatoare adresei ip a routerului 
+        cu care se incearca comunicarea.
+		:: Daca nu se cunoaste MAC-ul acestui router (nu exista o linie in tabela ARP
+        cu informatia necesara), atunci se adauga o linie noua in tabela ARP.
+        :: Deci, se doreste completarea noii linii din tabela cu perechea IP-MAC a
+        noului router inregistrat, dar inainte de acest lucru se verifica daca tabela
+        se afla la capacitate maxima. In caz afirmativ, se realoca tabela cu inca 10000
+        de locuri disponibile ( linii ) si se seteaza pe MAC-ul routerului (ARP_SHA-ul,
+        adica adresa MAC sursa, routerul care a trimis REQUEST-ul ) alaturi de 
+        ARP_SPA-ul, adresa IP a acestui router.
+        :: Pentru toate packetele din coada, se seteaza ca destinatie MAC-ul primit 
+        prin protocolul ARP ( ether_header -> ether_dhost ) si se trimite packetul.
+
+3-4. Procesul de dirijare - Protocolul ICMP.
+    :: Pentru inceput, sortez tabela de rutare folosind functia qsort pentru o sortare
+    crescatoare dupa prefix si masca.
+    :: Memorez in 
+        -> variabila "lines" = numarul de intrari in tabela de rutare.
+        -> variabila "arp_table_lines" = numarul de intrari in tabela ARP.
+        -> variabila "arp_table_capacity" = capacitatea initiala a tabelei ARP.
+    :: Odata ce primesc un packet, verific ce tip este:
+        == CAZUL ARP ==
+            :: Protocolul ARP.
+        == CAZUL IP ==
+            :: Daca packetul este de tip ICMP_ECHO, iar destinatia acestuia este
+            routerul prezent, atunci se trimite un ECHO_REPLY.
+            :: Se verifica checksum-ul, iar daca acesta este gresit, se arunca
+            packetul.
+            :: Daca un packet are TTL <= 1, atunci se arunca packet-ul.
+            :: Se decrementeaza TTL,se updateaza checksum-ul.
+            :: Se foloseste functia get_best_route() pentru a afla intrarea in tabela
+            de rutare pentru next_hop. Aceasta functie implementeaza o cautare binara
+            , deci are o complexitate temporala : O(log(n)). In aceasta funcite se 
+            incerca cautarea adresei de IP cautate, dar si a mastii cea mai lunga.
+            :: In caz ca nu se gaseste o astfel de linie in tabela de rutare
+            (index = -1 ), atunci se trimite atunci se trimite un mesaj ICMP 
+            de tipul "DESTINATION UNREACHABLE".
+            :: Daca s-a gasit intrarea pentru urmatorul router din cale, atunci se 
+            verifica daca se cunoaste adresa sa MAC, verificandu-se tabela ARP.
+            :: In cazul in care nu se cunoaste adresa sa MAC, atunci se trimite un
+            ARP REQUEST. Se creeaza un nou packet. Se trimite pe broadcast. Se pune 
+            packetul in coada pentru a fi trimis, atunci cand se va primi REPLY cu 
+            adresa MAC a routerului de pe ruta cea mai buna, ruta dorita.
+            :: In cazul in care se cunoaste si adresa MAC destinatie atunci 
+            se trimite packetul la urmatorul pas. 
+            Se seteaza ether_header->ether_shost-ul, interfata next_hop.
+            Se seteazaz ether_header->ether_dhost-ul, MAC-ul din tabela de ARP.
+            Se trimite packet-ul.
+            

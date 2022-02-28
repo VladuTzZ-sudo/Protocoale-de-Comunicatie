@@ -1,0 +1,337 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Fri Apr  9 17:31:25 2021
+# Process ID: 10692
+# Current directory: /home/vlad/Desktop/Semestrul2/PC/tema1
+# Command line: vivado
+# Log file: /home/vlad/Desktop/Semestrul2/PC/tema1/vivado.log
+# Journal file: /home/vlad/Desktop/Semestrul2/PC/tema1/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project /home/vlad/Desktop/Lab5/Lab5.xpr
+INFO: [Common 17-41] Interrupt caught. Command should exit soon.
+INFO: [Common 17-344] 'open_project' was cancelled
+open_project /home/vlad/Desktop/Lab4/Lab4.xpr
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/Vivado/2020.2/data/ip'.
+update_compile_order -fileset sources_1
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'FinalSimulation' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj FinalSimulation_vlog.prj
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '2' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+xelab -wto 652588e701ec4ed9a6b83c4011fbab94 --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot FinalSimulation_behav xil_defaultlib.FinalSimulation xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator 2020.2
+Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
+Running: /home/Vivado/2020.2/bin/unwrapped/lnx64.o/xelab -wto 652588e701ec4ed9a6b83c4011fbab94 --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot FinalSimulation_behav xil_defaultlib.FinalSimulation xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 6 for port 'carry_out' [/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/FinalCounter.v:8]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 6 for port 'carry_out' [/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/FinalCounter.v:9]
+Completed static elaboration
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+INFO: [USF-XSim-69] 'elaborate' step finished in '1' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "FinalSimulation_behav -key {Behavioral:sim_1:Functional:FinalSimulation} -tclbatch {FinalSimulation.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2020.2
+Time resolution is 1 ps
+source FinalSimulation.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 10000ns
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'FinalSimulation_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 10000ns
+launch_simulation: Time (s): cpu = 00:00:13 ; elapsed = 00:00:06 . Memory (MB): peak = 7512.324 ; gain = 131.832 ; free physical = 901 ; free virtual = 9490
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'FinalSimulation' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj FinalSimulation_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/FinalCounter.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module FinalCounter
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/bin2bcd.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bin2bcd
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/numarator_59_0.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module numarator_59_0
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sim_1/new/FinalSimulation.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module FinalSimulation
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+xelab -wto 652588e701ec4ed9a6b83c4011fbab94 --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot FinalSimulation_behav xil_defaultlib.FinalSimulation xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator 2020.2
+Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
+Running: /home/Vivado/2020.2/bin/unwrapped/lnx64.o/xelab -wto 652588e701ec4ed9a6b83c4011fbab94 --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot FinalSimulation_behav xil_defaultlib.FinalSimulation xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 6 for port 'carry_out' [/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/FinalCounter.v:8]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 6 for port 'carry_out' [/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/FinalCounter.v:9]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.numarator_59_0
+Compiling module xil_defaultlib.bin2bcd
+Compiling module xil_defaultlib.FinalCounter
+Compiling module xil_defaultlib.FinalSimulation
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot FinalSimulation_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '2' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "FinalSimulation_behav -key {Behavioral:sim_1:Functional:FinalSimulation} -tclbatch {FinalSimulation.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2020.2
+Time resolution is 1 ps
+source FinalSimulation.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 10000ns
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'FinalSimulation_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 10000ns
+launch_simulation: Time (s): cpu = 00:00:06 ; elapsed = 00:00:05 . Memory (MB): peak = 7531.195 ; gain = 18.871 ; free physical = 898 ; free virtual = 9488
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'FinalSimulation' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj FinalSimulation_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/FinalCounter.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module FinalCounter
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/bin2bcd.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bin2bcd
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/numarator_59_0.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module numarator_59_0
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sim_1/new/FinalSimulation.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module FinalSimulation
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+xelab -wto 652588e701ec4ed9a6b83c4011fbab94 --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot FinalSimulation_behav xil_defaultlib.FinalSimulation xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator 2020.2
+Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
+Running: /home/Vivado/2020.2/bin/unwrapped/lnx64.o/xelab -wto 652588e701ec4ed9a6b83c4011fbab94 --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot FinalSimulation_behav xil_defaultlib.FinalSimulation xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 6 for port 'carry_out' [/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/FinalCounter.v:8]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 6 for port 'carry_out' [/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/FinalCounter.v:9]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.numarator_59_0
+Compiling module xil_defaultlib.bin2bcd
+Compiling module xil_defaultlib.FinalCounter
+Compiling module xil_defaultlib.FinalSimulation
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot FinalSimulation_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '2' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "FinalSimulation_behav -key {Behavioral:sim_1:Functional:FinalSimulation} -tclbatch {FinalSimulation.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2020.2
+Time resolution is 1 ps
+source FinalSimulation.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 10000ns
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'FinalSimulation_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 10000ns
+launch_simulation: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 7538.195 ; gain = 7.000 ; free physical = 871 ; free virtual = 9462
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'FinalSimulation' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj FinalSimulation_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/FinalCounter.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module FinalCounter
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/bin2bcd.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bin2bcd
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/numarator_59_0.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module numarator_59_0
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sim_1/new/FinalSimulation.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module FinalSimulation
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+xelab -wto 652588e701ec4ed9a6b83c4011fbab94 --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot FinalSimulation_behav xil_defaultlib.FinalSimulation xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator 2020.2
+Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
+Running: /home/Vivado/2020.2/bin/unwrapped/lnx64.o/xelab -wto 652588e701ec4ed9a6b83c4011fbab94 --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot FinalSimulation_behav xil_defaultlib.FinalSimulation xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 6 for port 'carry_out' [/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/FinalCounter.v:8]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 6 for port 'carry_out' [/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/FinalCounter.v:9]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.numarator_59_0
+Compiling module xil_defaultlib.bin2bcd
+Compiling module xil_defaultlib.FinalCounter
+Compiling module xil_defaultlib.FinalSimulation
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot FinalSimulation_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '1' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "FinalSimulation_behav -key {Behavioral:sim_1:Functional:FinalSimulation} -tclbatch {FinalSimulation.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2020.2
+Time resolution is 1 ps
+source FinalSimulation.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 10000ns
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'FinalSimulation_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 10000ns
+launch_simulation: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 7543.195 ; gain = 5.000 ; free physical = 852 ; free virtual = 9452
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'FinalSimulation' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj FinalSimulation_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/FinalCounter.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module FinalCounter
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/bin2bcd.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bin2bcd
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/numarator_59_0.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module numarator_59_0
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/vlad/Desktop/Lab4/Lab4.srcs/sim_1/new/FinalSimulation.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module FinalSimulation
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+xelab -wto 652588e701ec4ed9a6b83c4011fbab94 --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot FinalSimulation_behav xil_defaultlib.FinalSimulation xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator 2020.2
+Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
+Running: /home/Vivado/2020.2/bin/unwrapped/lnx64.o/xelab -wto 652588e701ec4ed9a6b83c4011fbab94 --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot FinalSimulation_behav xil_defaultlib.FinalSimulation xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 6 for port 'carry_out' [/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/FinalCounter.v:8]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 6 for port 'carry_out' [/home/vlad/Desktop/Lab4/Lab4.srcs/sources_1/new/FinalCounter.v:9]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.numarator_59_0
+Compiling module xil_defaultlib.bin2bcd
+Compiling module xil_defaultlib.FinalCounter
+Compiling module xil_defaultlib.FinalSimulation
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot FinalSimulation_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '2' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/vlad/Desktop/Lab4/Lab4.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "FinalSimulation_behav -key {Behavioral:sim_1:Functional:FinalSimulation} -tclbatch {FinalSimulation.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2020.2
+Time resolution is 1 ps
+source FinalSimulation.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 10000ns
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'FinalSimulation_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 10000ns
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+exit
+INFO: [Common 17-206] Exiting Vivado at Fri Apr  9 17:45:50 2021...

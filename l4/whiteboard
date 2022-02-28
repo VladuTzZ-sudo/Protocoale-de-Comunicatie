@@ -1,0 +1,94 @@
+https://dfilip.xyz/pcom
+
+Dorinel Filip
+dorinel.filip@upb.ro
+Subiect: [PCom] ….
+
+https://pastebin.com/ewamNkQd
+
+Frame-ul Ethernet
+
+
+
+
+Headerul IP
+
+
+
+
+Primim_pachet
+-> verificam daca este de dat mai departe
+Verificam checksum (IP), daca check_sum gresit -> aruncat
+TTL <= 0 -> Arunca
+Pregatirea noului header IP
+    -> TTL--
+    -> Recalculare checksum
+
+Routerul cauta in tabela de rutare
+    search(IP_destinatie)
+        -> Nu gasesc == arunc
+        -> Gasesc == retin cui trebuie sa dau mai departe pachetul
+
+Actualizare ethernet
+-> Mac_Sursa = Mac interfata de iesire
+-> Mac_dest = adresa mac a next_hop
+
+Send(&m, interfata_dest)
+
+
+
+Ethernet
+
+struct    ether_header {
+    u_char     ether_dhost[6];
+    u_char     ether_shost[6];
+    u_short    ether_type;
+};
+
+IP Header
+
+struct iphdr {
+    __u8    ihl:4,
+        version:4;
+    __u8    tos;
+    __u16    tot_len;
+    __u16    id;
+    __u16    frag_off;
+    __u8    ttl;
+    __u8    protocol;
+    __u16    check;
+    __u32    saddr;
+    __u32    daddr;
+    /*The options start here. */
+};
+Tabela de dirijare
+
+Prefix (o adresa IP)            Masca de retea        Next_hop
+141.85.0.0                255.255.0.0            1.2.3.4 + interfata
+141.85.22.0                255.255.255.0            4.5.6.7 + interfata
+
+
+
+141.85.0.0 - 141.85.255.255
+141.85.22.13
+
+IP dest se potriveste cu o intrare din tabela de dirijare
+
+(IP_DEST & masca_de_retea) == (prefix & masca_de_retea)
+Daca mai multe adrese se potrivesc, atunci alegem intrarea cu masca de retea mai mare.
+
+
+2 clase de endianess:
+Endianess-ul local (cel folosit de masina mea)
+Endianess-ul de retea (o conventie comuna)
+
+Citesc in endianess-ul meu, dar de pe retea primesc in endianess-ul de retea si tot asa trebuie sa trimit
+
+ntoh - trecere de la endianess-ul de retea la cel local
+hton - de la endianess-ul local la cel de retea
+
+
+Ntohs (u16)
+Ntohl (u32)
+
+

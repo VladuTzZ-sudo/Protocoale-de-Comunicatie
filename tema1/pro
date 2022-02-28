@@ -1,0 +1,321 @@
+#include <queue.h>
+#include "skel.h"
+#include <errno.h>
+#include <fcntl.h>
+#include <netinet/if_ether.h>
+
+#define IP_OFF (sizeof(struct ether_header))
+#define ICMP_OFF (IP_OFF + sizeof(struct iphdr))
+
+struct route_table_entry
+{
+	uint32_t prefix;
+	uint32_t next_hop;
+	uint32_t mask;
+	int interface;
+} __attribute__((packed));
+
+struct arp_entry
+{
+	__u32 ip;
+	uint8_t mac[6];
+};
+
+struct route_table_entry *rtable;
+int rtable_size;
+
+struct arp_entry *arp_table;
+int arp_table_len = 0;
+
+int read_table(struct route_table_entry *rt, char *filename)
+{
+	FILE *f = fopen(filename, "r");
+	int k = 0;
+	if (f == NULL)
+	{
+		perror("Eroare la deschidere");
+	}
+	else
+	{
+		char buffer[50];
+		char prefix[20];
+		char nexthop[20];
+		char mask[50];
+		int interface;
+
+		while (fgets(buffer, 50, f))
+		{
+			sscanf(buffer, "%s%s%s%d", prefix, nexthop, mask, &interface);
+			rt[k].prefix = inet_addr(prefix);
+			rt[k].next_hop = inet_addr(nexthop);
+			rt[k].mask = inet_addr(mask);
+			rt[k].interface = interface;
+			k++;
+		}
+	}
+	fclose(f);
+	return k;
+}
+
+int numberoflines()
+{
+	FILE *f = fopen("rtable0.txt", "r");
+	int k = 0;
+	int c;
+	if (f == NULL)
+		return k;
+	else
+	{
+		while (!feof(f))
+		{
+			c = fgetc(f);
+			if (c == '\n')
+			{
+				k++;
+			}
+		}
+	}
+	fclose(f);
+	return k;
+}
+int comparator(const void *a, const void *b)
+{
+	struct route_table_entry *r1 = (struct route_table_entry *)a;
+	struct route_table_entry *r2 = (struct route_table_entry *)b;
+	if (r1->prefix == r2->prefix)
+	{
+		return (int)r2->mask - r1->mask;
+	}
+	else
+	{
+		return (int)r1->prefix - r2->prefix;
+	}
+}
+
+struct arp_entry *get_arp_entry(__u32 ip)
+{
+	for (int i = 0; i < arp_table_len; i++)
+	{
+		if (arp_table[i].ip == ip)
+			return &arp_table[i];
+	}
+	return NULL;
+}
+
+void add_arp_entry(uint32_t ip, uint8_t mac[6])
+{
+
+	if (arp_table == NULL)
+	{
+		arp_table_len++;
+		arp_table = realloc(arp_table, sizeof(struct arp_entry) * arp_table_len);
+		arp_table[0].ip = ip;
+		memcpy(arp_table[0].mac, mac, 6);
+	}
+	else
+	{
+		struct arp_entry *a = get_arp_entry(ip);
+		if (a == NULL)
+		{
+			arp_table_len++;
+			arp_table = realloc(arp_table, sizeof(struct arp_entry) * arp_table_len);
+			arp_table[arp_table_len - 1].ip = ip;
+			memcpy(arp_table[arp_table_len - 1].mac, mac, 6);
+		}
+	}
+}
+
+int get_best_route(__u32 dest_ip, int left, int right)
+{
+
+	if (right >= left)
+	{
+		int mid = left + (right - left) / 2;
+
+		if ((dest_ip & rtable[mid].mask) == rtable[mid].prefix)
+		{
+			uint32_t prefix = rtable[mid].prefix;
+			if (mid != 0)
+			{
+				while (rtable[mid].prefix == prefix)
+				{
+					mid--;
+				}
+			}
+			return mid + 1;
+		}
+		else
+		{
+			if ((dest_ip & rtable[mid].mask) < rtable[mid].prefix)
+			{
+				return get_best_route(dest_ip, left, mid - 1);
+			}
+			else
+			{
+				return get_best_route(dest_ip, mid + 1, right);
+			}
+		}
+	}
+	return -1;
+}
+
+int main(int argc, char *argv[])
+{
+	setvbuf(stdout, NULL, _IONBF, 0);
+	packet m;
+	int rc;
+
+	init(argc - 2, argv + 2);
+
+	rtable = malloc(sizeof(struct route_table_entry) * numberoflines());
+	rtable_size = read_table(rtable, argv[1]);
+	qsort(rtable, rtable_size, sizeof(struct route_table_entry), comparator);
+
+	arp_table = NULL;
+	queue q = queue_create();
+	// for (int i = 0; i < rtable_size; i++)
+	// {
+	// 	struct in_addr temp;
+	// 	temp.s_addr = rtable[i].prefix;
+	// 	printf("%s ", inet_ntoa(temp));
+	// 	temp.s_addr = rtable[i].next_hop;
+	// 	printf("%s ", inet_ntoa(temp));
+	// 	temp.s_addr = rtable[i].mask;
+	// 	printf("%s ", inet_ntoa(temp));
+	// 	printf("%d\n", rtable[i].interface);
+	// }
+	// uint8_t mac[6] = {0x00, 0x1E, 0xC0, 0x04, 0x9F, 0xF3};
+
+	// add_arp_entry(rtable[0].prefix, mac);
+	// for (int i = 0; i < arp_table_len; i++)
+	// {
+	// 	struct in_addr temp;
+	// 	temp.s_addr = arp_table[i].ip;
+	// 	printf("%s ", inet_ntoa(temp));
+	// 	printf("%s \n", arp_table[i].mac);
+	// }
+
+	while (1)
+	{
+		rc = get_packet(&m);
+		DIE(rc < 0, "get_message");
+		/* Students will write code here */
+		struct ether_header *eth_hdr = (struct ether_header *)m.payload;
+		struct iphdr *ip_hdr = (struct iphdr *)(m.payload + IP_OFF);
+		struct in_addr temp;
+		temp.s_addr = ip_hdr->saddr;
+		printf("Primit de la %s ", inet_ntoa(temp));
+
+		//Verificare primire pachet ICMP
+		if (ntohs(eth_hdr->ether_type) == ETHERTYPE_IP)
+		{
+			struct icmphdr *icmp_hdr = parse_icmp(m.payload);
+			//pachet ICMP REQUEST pentru ROUTER
+			if (icmp_hdr != NULL)
+			{
+				if ((icmp_hdr->type == ICMP_ECHO) && (ip_hdr->daddr == inet_addr(get_interface_ip(m.interface))))
+				{
+					send_icmp(ip_hdr->saddr, inet_addr(get_interface_ip(m.interface)), eth_hdr->ether_dhost, eth_hdr->ether_shost, 0, 0, m.interface, icmp_hdr->un.echo.id, icmp_hdr->un.echo.sequence);
+					continue;
+				}
+			}
+
+			if (ip_checksum(ip_hdr, sizeof(struct iphdr)) != 0)
+			{
+				continue;
+			}
+
+			if (ip_hdr->ttl <= 1)
+			{
+				send_icmp_error(ip_hdr->saddr, ip_hdr->daddr, eth_hdr->ether_dhost, eth_hdr->ether_shost, ICMP_TIME_EXCEEDED, ICMP_EXC_TTL, m.interface);
+				continue;
+			}
+
+			ip_hdr->ttl--;
+			ip_hdr->check = 0;
+			ip_hdr->check = ip_checksum(ip_hdr, sizeof(struct iphdr));
+
+			int index = get_best_route(ip_hdr->daddr, 0, rtable_size - 1);
+			if (index == -1)
+			{
+
+				printf("Nu exista intrare in tabel");
+				send_icmp_error(ip_hdr->saddr, ip_hdr->daddr, eth_hdr->ether_dhost, eth_hdr->ether_shost, ICMP_DEST_UNREACH, 0, m.interface);
+				continue;
+			}
+
+			struct route_table_entry *best_route = &rtable[index];
+			struct arp_entry *arp = get_arp_entry(best_route->next_hop);
+			if (arp == NULL)
+			{
+				printf("ARP NULL\n");
+				packet copy;
+				copy.len = m.len;
+				copy.interface = best_route->interface;
+				memcpy(copy.payload, m.payload, sizeof(m.payload));
+				eth_hdr->ether_type = htons(ETHERTYPE_ARP);
+				for (int i = 0; i < 6; i++)
+				{
+					eth_hdr->ether_dhost[i] = 255;
+				}
+				get_interface_mac(best_route->interface, eth_hdr->ether_shost);
+				send_arp(best_route->next_hop, inet_addr(get_interface_ip(best_route->interface)), eth_hdr, best_route->interface, htons(ARPOP_REQUEST));
+				queue_enq(q, &copy);
+				continue;
+			}
+			get_interface_mac(best_route->interface, eth_hdr->ether_shost);
+			memcpy(eth_hdr->ether_dhost, arp->mac, sizeof(arp->mac));
+			send_packet(best_route->interface, &m);
+		}
+		else
+		{
+			//Verificare primire pachet ARP
+			struct arp_header *arp_hdr = parse_arp(m.payload);
+			if (arp_hdr != NULL)
+			{
+				if (ntohs(arp_hdr->op) == ARPOP_REQUEST)
+				{
+
+					if (inet_addr(get_interface_ip(m.interface)) == arp_hdr->tpa)
+					{
+						memcpy(eth_hdr->ether_dhost, eth_hdr->ether_shost, 6);
+						get_interface_mac(m.interface, eth_hdr->ether_shost);
+						send_arp(arp_hdr->spa, arp_hdr->tpa, eth_hdr, m.interface, htons(ARPOP_REPLY));
+						continue;
+					}
+				}
+
+				if (ntohs(arp_hdr->op) == ARPOP_REPLY)
+				{
+					add_arp_entry(arp_hdr->spa, arp_hdr->sha);
+					queue aux = queue_create();
+
+					while (!queue_empty(q))
+					{
+						packet *temp = (packet *)queue_deq(q);
+						struct ether_header *eth_hdr1 = (struct ether_header *)temp->payload;
+						struct iphdr *ip_hdr1 = (struct iphdr *)(temp->payload + IP_OFF);
+						if (arp_hdr->spa == ip_hdr1->daddr)
+						{
+							get_interface_mac(temp->interface, eth_hdr1->ether_shost);
+							memcpy(eth_hdr1->ether_dhost, arp_hdr->sha, 6);
+							send_packet(temp->interface, temp);
+						}
+						else
+						{
+							queue_enq(aux, temp);
+						}
+					}
+
+					while (!queue_empty(aux))
+					{
+						packet *p = (packet *)queue_deq(aux);
+						queue_enq(q, p);
+					}
+
+					continue;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,24 @@
+Matei Vlad Cristian
+321CC
+
+send.
+    >   trimit numele fisierului cu dimensiunea sa.
+    >   intotdeauna dupa un send, urmeaza o verificare de recv_message().
+    >   verific daca exista erori la primirea mesajului cu numele
+    fisierului, daca nu exista printez ca s-a trimis cu succes.
+    >   deschis fisierul ce trebuie trimis.
+    >   daca exista erori la deschidere, programul se opreste.
+    >   daca nu, cat timp se citeste (de dimensiunea buffer-ului) daca mai
+    exista ceva de citit, atunci trimite mesajul si verifica cu recv...()
+    >   daca s-a ajuns la sfarsitul fisierului se trimite '\n' cu
+    lungimea 0.
+    >   daca exista o eroare la citire, se opreste.
+
+recv.
+    >   se verifica daca a ajuns mesajul.
+    >   Daca da, atunci se creaza numele fisierului.
+    >   se deschide un new file de numele fisierului.
+    >   daca sunt erori, programul se opreste.
+    >   daca nu, cat timp lungimea mesajului este != 0 se verifica
+    primirea si daca a ajuns , atunci se scrie in fisierul creat.
+    >   la sfarsit se inchide fisierul.  

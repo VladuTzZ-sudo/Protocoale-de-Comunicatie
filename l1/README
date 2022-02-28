@@ -1,0 +1,12 @@
+Matei Vlad Cristian
+321CC
+
+Ex1:
+	In mare, lucrurile explicate la laborator. Am pus la linia 38, am completat cu eroare de scriere.	 Am introdus un for care sa parcurga toate fisierele in caz ca sunt mai multe.
+
+Ex2:
+	Asa cum ai spus, am folosit ftell - pentru a retine pozitia in fisier inaintea citirii liniei.
+	Apoi, parcurg de jos in sus liniile si setez cu fseek ( .. Seek_set ) pozitia pointer-ului la
+	inceputul liniei selectate.
+
+

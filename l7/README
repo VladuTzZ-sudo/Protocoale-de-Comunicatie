@@ -1,0 +1,42 @@
+Matei Vlad Cristian 
+321CC
+
+SERVER
+	:: Se verifica ca avem dat ca argument un port.
+	:: Se creeaza un socket TCP pentru receptionarea conexiunilor.
+	:: Se seteaza campurile serv_add pentru bind.
+	:: Se asociaza adresa serverului cu socketul creat.
+	:: Se apeleaza run_chat_server / run_echo_server.
+
+	RUN_ECHO_SERVER
+		-> se apeleaza functia listen, se verifica erorile posibile.
+		-> Se asculta doar pentru 2 clienti , 1 max in coada.
+		-> Se accepta o conexiune.
+		-> Se trimite un send de realizare conexiune.
+		-> se apeleaza functia receive_and_send cand timp mai primeste ceva.
+
+	RUN_CHAT_SERVER
+		-> Se apeleaza functia listen pe socket-ul dat, ascultand doi client, 1 maxim in coada.
+		-> Se accepta doua conexiuni, pentru 2 clienti.
+		-> Se trimite un send de realizare conexiune.
+		-> Cat timp se primesc bytes se trimit la celalalt client , folosind functia receive_and_send. 
+
+	RECEIVE_SEND
+		-> Primeste un numaru de bytes.
+		-> Verifica daca sunt erori.
+		-> Trimite.
+
+CLIENT 
+	:: Verifica sa primeasca atat ip cat si port.
+	:: Creaza socket-ul TCP pentru conectarea la server.
+	:: Se seteaza campurile serv_add pentru portul de conectare.
+	:: Se conecteaza la server.
+	:: Se apeleaza functia RUN_CLIENT.
+
+	RUN_CLIENT
+		-> Primeste send-ul de confirmare conexiune.
+		-> Citeste de la stdin si trimite mesajul catre server prin sockfd.
+		-> Apoi, receptioneaza un mesaj venit de la server.
+
+
+                                                                 

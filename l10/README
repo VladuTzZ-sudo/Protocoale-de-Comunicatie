@@ -1,0 +1,64 @@
+Matei Vlad Cristian
+321CC
+                                LAB 10 
+                                 HTTP
+
+    Functii Request
+
+    :: compute_get_request()
+        :: Functia cu care vom putea face interogari de tip 
+        Get ( interogare de resurse )
+        :: Primeste ca parametri host-ul, url-ul, si cei de cookie.
+        :: Se creeaza mesajele in formatul corespunzator.
+        :: Cookie: cheie1=valoare1; cheie2=valoare2; ...; cheieN=valoareN\r\n
+        pt Cookies.
+    
+    :: compute_post_request()
+        :: Functia cu care vom putea face adaugare de resurse. 
+        De obicei are si date atasate.
+        :: Se realizeaza POST cu data de forma 
+        application/x-www-form-urlencoded pe adresa /api/v1/dummy.
+        :: Se creaza si formatul de body_data cu string-urile concatenate
+        prin "&", pe cand cookie-urile sunt concatenate prin "; "
+
+    Client.
+
+    1. GET pe adresa /api/v1/dummy.
+        :: Se deschide o conexiune pe sockfd.
+        :: Apelam functia compute_get_request() de datele corespunzatoare.
+        :: Se trimite catre server mesajul. Se primeste raspunsul.
+        :: Se inchide conexiunea.
+
+    2. POST cu orice data de forma ...
+        :: Se deschide o conexiune pe sockfd.
+        :: Apelam functia compute_post_request() de datele corespunzatoare.
+        :: Se trimite catre server mesajul. Se primeste raspunsul.
+        :: Se inchide conexiunea. 
+
+    3. Login.
+        :: Se deschide o conexiune pe sockfd.
+        :: POST pe adresa /api/v1/auth/login cu username student 
+        si password student. 
+        :: Data este de forma application/x-www-form-urlencoded 
+        :: Se formeaza un char** numit "login" care va contine pe pozitia
+        0 - username-ul, iar pe pozitia 1 un string pt parola.
+        :: Apelam functia compute_post_request() de datele corespunzatoare.
+        :: Se trimite catre server mesajul. Se primeste raspunsul.
+        :: Se inchide conexiunea. 
+
+    4. GET key.
+        :: Se deschide o conexiune pe sockfd.
+        :: GET pe adresa /api/v1/weather/key
+        :: Folosesc cookie-ul obtinut la pasul precedent.
+        :: Creez un char** = cookies, iar cookies[0] contine cookie-ul
+        hardcodat.
+        :: Apelam functia compute_get_request() de datele corespunzatoare.
+        :: Se trimite catre server mesajul. Se primeste raspunsul.
+        :: Se inchide conexiunea.
+
+    5. Logout.  
+        :: Se deschide o conexiune pe sockfd.
+        :: GET pe adresa /api/v1/auth/logout.
+        :: Apelam functia compute_get_request() de datele corespunzatoare.
+        :: :: Se trimite catre server mesajul. Se primeste raspunsul.
+        :: Se inchide conexiunea. 

@@ -1,0 +1,22 @@
+Matei Vlad Cristian
+321CC
+
+Lab5 = ICMP
+
+ping(...)
+    = TODO2: for-ul este de la 0 : counter, pentru a da ping de counter ori.
+    = TODO1: pkt.size = sizeof(header-ele : ether, iphdr, icmphdr).
+           : initializez headerul IPv4 cu informatiile necesare.
+           : initializez headerul ICMP cu informatiile necesare.
+           : ip_hdr->daddr = ip_addr.s_addr seteaza ca adresa destinatie, 
+           ip-ul sursa al parametrului ip_addr. (destinatia).
+           : la sfarsit se verifica daca in packet-ul replay, in icmp se
+           field-ul code = 0 , iar type-ul este ECHOREPLY, in caz afirmativ
+           se printeaza TTL-ul packet-ului.
+
+traceroute(...)
+    = initializez headerul IPv4 cu informatiile necesare.
+    = initializez headerul ICMP cu informatiile necesare.
+    = realizez acest lucru pana la ICMP_TIME_EXCEEDED.
+
+PING-ul ar trebui sa functioneze din maxim a 3-a incercare, aidoma traceroute.

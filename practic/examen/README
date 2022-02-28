@@ -1,0 +1,13 @@
+Matei Vlad Cristian
+321 CC
+
+Test Practic PC
+
+= Am folosit o parte din codul de laborator din lab 6.
+= Am implementat server-ul doar pt 1 conectare cu doar 1 client UDP.
+= Am implementat toate cererile.
+= In toate cererile se intoarce in client mesajul cu HTTP 200 sau alta eroare.
+in schimb nu am implementat si celelelalte printf-uri simple de la server catre client. nu toate.
+= la server:
+	status functioneaza dar din cauza printari anterioare cu /n /n /r /r ... trebuie dat de mai multe ori. La mine din a 2-a incercare a mers status.
+	quit functioneaza pt server cat si pentru client.

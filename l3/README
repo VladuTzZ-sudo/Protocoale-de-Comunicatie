@@ -1,0 +1,54 @@
+1.
+real    0m5,313s (1 10)
+
+real    0m14,308s (1 100)
+
+real    0m9,300s (1 50)
+
+real    0m7,286s (10 50)
+
+=> bandwidth ineficient folosit
+
+
+2.
+real    0m6,310s (1 20)
+
+3.
+real    0m3,315s (2 1)
+
+4.
+real    0m2,645s (5 1)
+
+Obs: (a b) - a Speed
+                   - b Delay
+
+
+Fereastra Glisanta
+
+1.
+real    0m4,387s (1 100)
+
+real    0m2,342s (10 50)
+
+2.
+real    0m6,299s (1 20)
+
+Obs: (2 1) si (5 1) - nu merg, punct.
+
+In cazul verificarii erorilor am folosit functia control_sum. Suma se pozitioneaza in payload pe
+ultima poz: 1399 ( 1400 - 1 ) in send.c, iar in fisierul recv.c se verifica dupa ce a fost citit
+mesajul ,daca suma calculata de aceasta data si suma transmisa prin mesaj sunt indentice.
+
+BONUS:
+	La bonus, am schimbat dimensiunea ferestrei de glisare, si am dat un numar mai mare ( 200 ).
+	Deoarece numarul 200 este mai mare decat (BDP * 1000) / (1400 * 8) - adica de cata informatie
+	maxima putea suporta conexiunea, si pentru ca in primul for nu se verifica ACK, => ca 
+	receiver-ul va fi supraincarcat, va primi mai multa informatie decat poate analiza atunci si 
+	anumite pachete se vor pierde. Astfel, daca mai raman pachete de transmis , in al doilea for
+	ele se vor transmite cu succes pentru ca se va respecta "asteptarea ACK-ului", insa in ultimul
+	for, sender-ul asteapta ACK-urile pachetelor pe care le-a transmis pana atunci , insa multe
+	dintre ele s-au pierdut cand s-a supraincarcat reteaua. Astfel, acolo se blocheaza sender-ul si
+	nu afiseaza ultimul mesaj.
+
+Matei Vlad Cristian
+321CC

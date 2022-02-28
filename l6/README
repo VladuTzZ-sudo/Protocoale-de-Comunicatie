@@ -1,0 +1,27 @@
+Matei Vlad Cristian
+321CC
+
+SERVER:
+	Se deschide socket-ul.
+	Se seteaza parametrii socket-ului pentru a asculta pe portul dat ca parametru.
+	Se leaga proprietatiile de socket.
+	Deschide fisierul pentru scriere, si cat timp se poate citi ( citire > 0 ) din 
+	socket , pune in fisier.	
+	
+CLIENT:
+	Se deschide socket-ul.
+	Deschidere fisier de citire.
+	Se seteaza sockaddr_in pentru a specifica unde se trimit datele.
+	Cat timp poate citi, ( count > 0 ), citeste din fisier si trimite pe socket.
+
+					BONUS
+CLIENT:
+	Numarul de fisiere asteptate va fi argc - 3 {3 = executabil, ip_server, port}.
+	Se deschid pe rand cele n fisiere asteptate si se citeste dupa aceeasi regula, pana
+	la count <= 0.
+
+SERVER:
+	Nr de fisiere = este primit de la client. Aidoma, se deschide fisierul de scriere, 
+citindu-se din socket , punandu-se in fisier.
+	
+	
